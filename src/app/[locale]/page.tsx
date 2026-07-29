@@ -8,6 +8,9 @@ import { ClientsMarquee } from "@/components/sections/ClientsMarquee";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import type { Locale } from "@/lib/types";
 
+// FeaturedTracks がアップロード済みの実楽曲を都度取得するため動的レンダリングにする
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

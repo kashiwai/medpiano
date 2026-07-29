@@ -44,9 +44,10 @@ export default async function NewsDetailPage({
   const item = news.find((n) => n.slug === slug);
   if (!item) notFound();
 
+  // 実データ（YouTube か MP3）に繋がっていないプレースホルダー楽曲は関連楽曲として出さない
   const relatedTracks = (item.relatedTracks ?? [])
     .map((id) => tracks.find((track) => track.id === id))
-    .filter((track): track is Track => Boolean(track));
+    .filter((track): track is Track => Boolean(track && (track.youtubeId || track.mp3Path)));
 
   return (
     <article className="py-16 md:py-24 px-6 md:px-12">

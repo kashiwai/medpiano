@@ -1,13 +1,16 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { PillBadge } from "@/components/ui/PillBadge";
 import { Button } from "@/components/ui/Button";
 import { TrackCard } from "@/components/tracks/TrackCard";
-import tracksData from "@/data/tracks.json";
-import type { Track } from "@/lib/types";
+import { getUploadedTracks } from "@/lib/uploadedTracks";
 
-export function FeaturedTracks() {
-  const t = useTranslations("HomePage.featured");
-  const featuredTracks = (tracksData as Track[]).filter((track) => track.featured).slice(0, 6);
+export async function FeaturedTracks() {
+  const t = await getTranslations("HomePage.featured");
+  const featuredTracks = (await getUploadedTracks()).slice(0, 6);
+
+  if (featuredTracks.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-24 md:py-32 px-6 md:px-12 relative">

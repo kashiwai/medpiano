@@ -21,7 +21,8 @@ const CATEGORIES: { value: TrackCategory; key: "cm" | "movie" | "artist" | "tour
 export function WorksGrid() {
   const t = useTranslations("WorksPage");
   const searchParams = useSearchParams();
-  const tracks = tracksData as Track[];
+  // 実データ（YouTube か MP3）に繋がっていないプレースホルダー楽曲は表示しない
+  const tracks = (tracksData as Track[]).filter((track) => track.youtubeId || track.mp3Path);
 
   const category = searchParams.get("category");
   const media = searchParams.get("media");
