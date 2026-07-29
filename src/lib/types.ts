@@ -16,6 +16,11 @@ export type Track = {
   mp3Path?: string | null;
   thumbnail?: string | null;
 
+  // アップロード機能（Vercel Blob）経由の楽曲・動画用。
+  // mp3Path は R2 相対パス前提のため、絶対URLで再生する場合はこちらを使う。
+  mediaUrl?: string | null;
+  mediaKind?: "audio" | "video" | null;
+
   client?: string | null;
   artist?: string | null;
   descriptionEn?: string;

@@ -58,6 +58,11 @@ export function TrackCard({ track }: { track: Track }) {
             {track.mp3Path && (
               <span className={`text-xs font-anton bg-magenta px-2 py-1 rounded ${onColorTextMap.magenta}`}>MP3</span>
             )}
+            {track.mediaUrl && (
+              <span className={`text-xs font-anton bg-sun px-2 py-1 rounded ${onColorTextMap.sun}`}>
+                {track.mediaKind === "video" ? "VIDEO" : "AUDIO"}
+              </span>
+            )}
           </div>
         </div>
       </motion.article>

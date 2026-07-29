@@ -36,6 +36,16 @@ export function TrackModal({ track, onClose }: { track: Track; onClose: () => vo
             <YouTubeEmbed videoId={track.youtubeId} />
           ) : track.mp3Path ? (
             <AudioPlayer src={r2Url(track.mp3Path)} track={track} />
+          ) : track.mediaUrl && track.mediaKind === "video" ? (
+            <video
+              controls
+              preload="none"
+              playsInline
+              className="aspect-video w-full rounded-2xl border-[3px] border-black bg-black object-cover"
+              src={track.mediaUrl}
+            />
+          ) : track.mediaUrl ? (
+            <AudioPlayer src={track.mediaUrl} track={track} />
           ) : (
             <div className="aspect-video bg-teal border-[3px] border-black rounded-2xl flex items-center justify-center">
               <p className="font-anton text-2xl">{t("comingSoon")}</p>
