@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Play } from "lucide-react";
+import { Play, Clapperboard } from "lucide-react";
 import { PillBadge } from "@/components/ui/PillBadge";
 import { MusicIcon } from "@/components/doodles/MusicIcon";
 import { TrackModal } from "@/components/tracks/TrackModal";
@@ -23,7 +23,22 @@ export function TrackCard({ track }: { track: Track }) {
         onClick={() => setModalOpen(true)}
       >
         <div className="aspect-video relative bg-black overflow-hidden">
-          {track.thumbnail ? (
+          {track.mediaKind === "video" ? (
+            <div className="relative w-full h-full bg-black flex items-center justify-center border-y-[3px] border-magenta">
+              {/* フィルムストリップ風の縁取り（動画専用デザイン） */}
+              <div className="absolute inset-x-0 top-0 flex justify-between px-2 py-1.5">
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <span key={i} className="w-2 h-2 rounded-[1px] bg-cream/50" />
+                ))}
+              </div>
+              <Clapperboard className="w-14 h-14 text-sun" />
+              <div className="absolute inset-x-0 bottom-0 flex justify-between px-2 py-1.5">
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <span key={i} className="w-2 h-2 rounded-[1px] bg-cream/50" />
+                ))}
+              </div>
+            </div>
+          ) : track.thumbnail ? (
             <Image src={track.thumbnail} alt={track.titleEn} fill className="object-cover" />
           ) : (
             <div className="w-full h-full bg-teal flex items-center justify-center">

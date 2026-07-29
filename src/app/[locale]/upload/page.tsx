@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import { Link } from "@/i18n/routing";
 import { inputStyles } from "@/components/ui/FormField";
+import { ManageUploadsPanel } from "@/components/ManageUploadsPanel";
 
 function initialPassword() {
   if (typeof window === "undefined") return "";
@@ -29,6 +30,7 @@ export default function UploadPage() {
   const [status, setStatus] = useState<string>("");
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState<UploadedItem[]>([]);
+  const [refreshKey, setRefreshKey] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   function handleUnlock() {
@@ -63,6 +65,7 @@ export default function UploadPage() {
     setUploaded((prev) => [...newlyUploaded, ...prev]);
     setStatus(`${newlyUploaded.length}件アップロード完了`);
     setUploading(false);
+    setRefreshKey((k) => k + 1);
     if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
@@ -92,7 +95,7 @@ export default function UploadPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-6 py-16">
+    <main className="mx-auto flex min-h-screen max-w-3xl flex-col gap-6 px-6 py-16">
       <div>
         <h1 className="font-anton text-3xl uppercase">🎵 Upload Tracks &amp; Videos</h1>
         <p className="mt-2 font-dm text-sm text-black/60">
@@ -156,6 +159,14 @@ export default function UploadPage() {
           ))}
         </div>
       )}
+
+      <div className="mt-6 border-t-2 border-black pt-6">
+        <h2 className="font-anton text-xl uppercase mb-1">📋 Manage Uploaded Files</h2>
+        <p className="mb-4 font-dm text-sm text-black/60">
+          表示名を編集してSaveすると、WORKSページのカード表示にすぐ反映されます。
+        </p>
+        <ManageUploadsPanel password={password} refreshKey={refreshKey} />
+      </div>
 
       <Link
         href="/works"

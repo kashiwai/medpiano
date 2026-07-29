@@ -1,6 +1,7 @@
 import { list } from "@vercel/blob";
 import { PillBadge } from "@/components/ui/PillBadge";
 import { TrackCard } from "@/components/tracks/TrackCard";
+import { getMediaOverrides } from "@/lib/blobMetadata";
 import type { Track } from "@/lib/types";
 
 function displayTitle(pathname: string): string {
@@ -22,8 +23,12 @@ async function safeList(prefix: string) {
   }
 }
 
-function toTrack(blob: { pathname: string; url: string; uploadedAt: Date | string }, kind: "audio" | "video"): Track {
-  const title = displayTitle(blob.pathname).replace(/[-_]/g, " ").toUpperCase();
+function toTrack(
+  blob: { pathname: string; url: string; uploadedAt: Date | string },
+  kind: "audio" | "video",
+  overrideName?: string,
+): Track {
+  const title = (overrideName || displayTitle(blob.pathname).replace(/[-_]/g, " ")).toUpperCase();
   return {
     id: blob.url,
     slug: blob.url,
@@ -40,15 +45,19 @@ function toTrack(blob: { pathname: string; url: string; uploadedAt: Date | strin
 }
 
 export async function UploadedGallery() {
-  const [tracks, videos] = await Promise.all([safeList("tracks/"), safeList("videos/")]);
+  const [tracks, videos, overrides] = await Promise.all([
+    safeList("tracks/"),
+    safeList("videos/"),
+    getMediaOverrides(),
+  ]);
 
   if (tracks.length === 0 && videos.length === 0) {
     return null;
   }
 
   const uploadedTracks: Track[] = [
-    ...tracks.map((blob) => toTrack(blob, "audio")),
-    ...videos.map((blob) => toTrack(blob, "video")),
+    ...tracks.map((blob) => toTrack(blob, "audio", overrides[blob.pathname]?.displayName)),
+    ...videos.map((blob) => toTrack(blob, "video", overrides[blob.pathname]?.displayName)),
   ];
 
   return (
