@@ -1,0 +1,47 @@
+[
+  {
+    "id": "news-01",
+    "slug": "mv-launch-2025-summer",
+    "titleEn": "20 MVs LAUNCHING SUMMER 2025",
+    "titleJa": "2025年夏、20本のMVを一挙公開",
+    "category": "mv",
+    "publishedAt": "2025-06-01",
+    "excerpt": "3,000曲以上のアーカイブからセレクトした20曲のMVを、2025年夏よりYouTubeで順次公開予定。",
+    "thumbnail": null,
+    "heroImage": null,
+    "body": "<p>MedPianoが10年以上にわたって制作してきた3,000曲以上の楽曲アーカイブから、選りすぐりの20曲をMV（ミュージックビデオ）として2025年夏よりYouTube公式チャンネルで公開します。</p><p>各MVは楽曲の世界観に合わせた独自のビジュアル演出を予定。順次公開する予定です。</p>",
+    "youtubeId": null,
+    "relatedTracks": ["track-01", "track-02", "track-03"],
+    "featured": true
+  },
+  {
+    "id": "news-02",
+    "slug": "sony-music-collab-announcement",
+    "titleEn": "SONY MUSIC COLLABORATION ANNOUNCED",
+    "titleJa": "SONY Musicとのコラボレーション始動",
+    "category": "collab",
+    "publishedAt": "2024-11-15",
+    "excerpt": "映画音楽の分野でSONY Music Entertainment Japanとの共同制作が本格スタート。",
+    "thumbnail": null,
+    "heroImage": null,
+    "body": "<p>MedPianoは SONY Music Entertainment Japan とのコラボレーションを開始しました。今後、映画挿入歌およびエンディングテーマの共同制作を進めていきます。</p>",
+    "youtubeId": null,
+    "relatedTracks": ["track-06", "track-19"],
+    "featured": false
+  },
+  {
+    "id": "news-03",
+    "slug": "official-site-launch",
+    "titleEn": "OFFICIAL SITE LAUNCHED",
+    "titleJa": "オフィシャルサイト公開",
+    "category": "press",
+    "publishedAt": "2025-07-01",
+    "excerpt": "MedPianoの新しいオフィシャルサイトを公開しました。楽曲、実績、お問い合わせフォームを備えた完全版です。",
+    "thumbnail": null,
+    "heroImage": null,
+    "body": "<p>MedPianoのオフィシャルサイトを公開しました。20曲の楽曲サンプル、実績、プロフィール、お問い合わせフォームなど、必要な情報をすべて集約しています。</p><p>CM、映画、アーティスト楽曲のご相談は Contact ページからお気軽にどうぞ。</p>",
+    "youtubeId": null,
+    "relatedTracks": [],
+    "featured": false
+  }
+]

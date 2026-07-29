@@ -1,0 +1,25 @@
+{
+  "timeline": [
+    { "year": "2014", "labelEn": "Beginning", "labelJa": "音楽業界に潜む", "active": false, "highlight": false },
+    { "year": "2018", "labelEn": "1,000 Songs", "labelJa": "累計1,000曲突破", "active": false, "highlight": false },
+    { "year": "2021", "labelEn": "Pandemic Era", "labelJa": "コロナ禍で加速", "active": true, "highlight": true },
+    { "year": "2023", "labelEn": "SONY Music", "labelJa": "映画音楽コラボ", "active": true, "highlight": false },
+    { "year": "2025", "labelEn": "MV Rollout", "labelJa": "YouTube大量投下", "active": true, "highlight": true }
+  ],
+  "stats": [
+    { "number": "3,000+", "en": "SONGS COMPOSED", "ja": "楽曲制作数", "color": "magenta" },
+    { "number": "47", "en": "PREFECTURES", "ja": "観光局提供", "color": "teal" },
+    { "number": "17+", "en": "TALENT COLLABS", "ja": "楽曲提供先", "color": "sun", "note": "ARTISTS 5 / TALENTS 3 / ADULT 9" }
+  ],
+  "manifesto": {
+    "en": [
+      "MUSIC IS NOT A JOB.",
+      "IT'S THE ONLY LANGUAGE",
+      "I SPEAK WITHOUT A FACE."
+    ],
+    "ja": [
+      "音楽は仕事じゃない。",
+      "顔を出さずに話せる、唯一の言葉だ。"
+    ]
+  }
+}

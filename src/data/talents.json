@@ -1,0 +1,29 @@
+[
+  {
+    "id": "artists",
+    "count": 5,
+    "en": "ARTISTS",
+    "ja": "アーティスト",
+    "descEn": "Recording artists across J-pop, R&B, and ballad genres.",
+    "descJa": "J-pop、R&B、バラードなど幅広いジャンルの録音アーティスト。",
+    "color": "magenta"
+  },
+  {
+    "id": "talents",
+    "count": 3,
+    "en": "TALENTS",
+    "ja": "タレント",
+    "descEn": "TV personalities and multi-genre entertainers.",
+    "descJa": "テレビタレント、マルチジャンルのエンターテイナー。",
+    "color": "teal"
+  },
+  {
+    "id": "adult",
+    "count": 9,
+    "en": "ADULT",
+    "ja": "セクシー女優",
+    "descEn": "Adult entertainment industry, image songs and promotional tracks.",
+    "descJa": "アダルト業界向けのイメージソングとプロモーション楽曲。",
+    "color": "sun"
+  }
+]

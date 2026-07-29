@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* MedPiano ブランドカラー（4色 + クリーム背景のみ） */
+  --color-cream: #f5efe0;
+  --color-cream-light: #faf6ec;
+  --color-magenta: #ff2d87;
+  --color-teal: #12a594;
+  --color-sun: #ffd23f;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* フォント */
+  --font-anton: var(--font-anton);
+  --font-archivo: var(--font-archivo);
+  --font-zen: var(--font-zen);
+  --font-dm: var(--font-dm);
+
+  /* タイポスケール */
+  --text-hero: clamp(4rem, 12vw, 9rem);
+  --text-hero--line-height: 0.9;
+  --text-hero--letter-spacing: -0.02em;
+  --text-h1: clamp(2.5rem, 6vw, 5rem);
+  --text-h1--line-height: 1;
+  --text-h2: clamp(2rem, 4vw, 3rem);
+  --text-h2--line-height: 1.1;
+  --text-h3: 1.75rem;
+  --text-h3--line-height: 1.2;
+  --text-body-lg: 1.25rem;
+  --text-body-lg--line-height: 1.6;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-caption: 0.875rem;
+  --text-caption--line-height: 1.4;
+  --text-pill: 0.9rem;
+  --text-pill--line-height: 1;
+  --text-number-mega: clamp(6rem, 20vw, 16rem);
+  --text-number-mega--line-height: 0.85;
+  --text-number-mega--letter-spacing: -0.03em;
+  /* 3〜4カラムグリッド内で使う巨大数字（number-mega だと横並びで衝突するため専用トークンを用意） */
+  --text-number-lg: clamp(2.5rem, 7vw, 6rem);
+  --text-number-lg--line-height: 0.9;
+  --text-number-lg--letter-spacing: -0.02em;
+
+  /* シャドウ */
+  --shadow-sticker: 6px 6px 0 0 #000;
+  --shadow-sticker-sm: 4px 4px 0 0 #000;
+
+  /* 角丸 */
+  --radius-pill: 9999px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: #000000;
 }

@@ -1,0 +1,283 @@
+{
+  "Meta": {
+    "siteName": "MedPiano",
+    "description": "謎の作詞作曲家 MedPiano のオフィシャルサイト。CM・映画・アーティスト楽曲提供、SONY Musicコラボ実績。"
+  },
+  "Nav": {
+    "home": "HOME",
+    "profile": "PROFILE",
+    "works": "WORKS",
+    "clients": "CLIENTS",
+    "news": "NEWS",
+    "contact": "CONTACT"
+  },
+  "MobileNav": {
+    "home": "ホーム",
+    "profile": "プロフィール",
+    "works": "楽曲",
+    "clients": "実績",
+    "news": "ニュース",
+    "contact": "お問い合わせ"
+  },
+  "Footer": {
+    "tagline": "謎の作詞作曲家。10年、影に潜む。3,000曲以上の実績。",
+    "jasrac": "JASRAC Registered",
+    "since": "Since 2014",
+    "site": "SITE",
+    "legal": "LEGAL",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "copyright": "All songs are original works. JASRAC registered.",
+    "madeIn": "MADE IN THE SHADOWS 🎹"
+  },
+  "HomePage": {
+    "hero": {
+      "title1": "MEET",
+      "title2": "MED",
+      "title3": "PIANO",
+      "subtitle": "謎の作詞作曲家",
+      "tagline": "10年、影に潜む",
+      "taglineEn": "THE FACELESS COMPOSER"
+    },
+    "mystery": {
+      "title": "WHO IS MEDPIANO?",
+      "subtitle": "分かるのは、音楽だけ。",
+      "age": "年齢不詳",
+      "gender": "性別不明",
+      "face": "素顔非公開",
+      "cta": "SEE THE FULL PROFILE →"
+    },
+    "numbers": {
+      "songs": "楽曲制作数",
+      "years": "活動年数",
+      "prefectures": "観光局提供"
+    },
+    "featured": {
+      "badge": "FEATURED WORKS",
+      "title1": "HEAR THE",
+      "title2": "MUSIC",
+      "subtitle": "代表曲をピックアップ",
+      "cta": "VIEW ALL 20 WORKS →"
+    },
+    "clients": {
+      "title": "TRUSTED BY",
+      "subtitle": "実績のあるパートナー"
+    },
+    "cta": {
+      "title1": "LET'S MAKE",
+      "title2": "MUSIC",
+      "title3": "TOGETHER.",
+      "subtitle": "一緒に音楽を作りましょう。",
+      "button": "お問い合わせ →",
+      "jasrac": "JASRAC REGISTERED"
+    }
+  },
+  "ProfilePage": {
+    "hero": {
+      "badge": "PROFILE",
+      "title1": "WHO IS",
+      "title2": "MEDPIANO?",
+      "quote": "分かるのは、音楽だけ。",
+      "quoteEn": "THE ONLY THING WE KNOW IS THE MUSIC.",
+      "cards": {
+        "age": { "label": "AGE", "ja": "年齢不詳", "desc": "Unknown for over a decade" },
+        "gender": { "label": "GENDER", "ja": "性別不明", "desc": "Never disclosed" },
+        "face": { "label": "FACE", "ja": "素顔非公開", "desc": "No photo, no video, ever" }
+      }
+    },
+    "obsession": {
+      "badge": "完全に趣味の世界",
+      "title1": "PURE",
+      "title2": "OBSESSION",
+      "line1": "日本のポップシーンに",
+      "line2": "10年、どハマり中",
+      "quote": "\"Not a job. It's a passion.\"",
+      "quoteJa": "仕事じゃない、情熱だ。"
+    },
+    "timeline": {
+      "badge": "TIMELINE",
+      "title": "10+ YEARS IN THE SHADOWS",
+      "growthEn": "FROM QUIET COMPOSER TO PROLIFIC POWERHOUSE",
+      "growthJa": "静かな作曲家から、量産の怪物へ"
+    },
+    "stats": {
+      "badge": "BY THE NUMBERS",
+      "title": "THE PROOF"
+    },
+    "speed": {
+      "badge": "STUDIO TURNAROUND",
+      "title1": "SONIC",
+      "title2": "SPEED",
+      "subtitle": "驚速の制作スピード",
+      "fastest": "最短納品",
+      "standard": "標準納期",
+      "quality1": "HIGH QUALITY.",
+      "qualityJa": "一切の妥協なし。",
+      "quality2": "NO COMPROMISE."
+    },
+    "manifesto": {
+      "en1": "MUSIC IS NOT A JOB.",
+      "en2": "IT'S THE ONLY LANGUAGE",
+      "en3": "I SPEAK WITHOUT A FACE.",
+      "ja1": "音楽は仕事じゃない。",
+      "ja2": "顔を出さずに話せる、唯一の言葉だ。"
+    },
+    "cta": {
+      "title": "NEXT: HEAR THE MUSIC",
+      "subtitle": "3,000曲の中から、20曲をご紹介",
+      "primary": "VIEW WORKS →",
+      "secondary": "お問い合わせ"
+    }
+  },
+  "WorksPage": {
+    "hero": {
+      "badge": "WORKS",
+      "title1": "20",
+      "title2": "SELECTED",
+      "title3": "TRACKS",
+      "subtitle": "3,000曲から厳選、20曲。",
+      "subtitleEn": "20 hand-picked tracks from a 3,000+ archive.",
+      "badge1": "🎵 MP3 SAMPLES",
+      "badge2": "📺 YOUTUBE EMBEDS",
+      "badge3": "⚡ INSTANT PLAY"
+    },
+    "filters": {
+      "all": "ALL",
+      "cm": "CM",
+      "movie": "MOVIE",
+      "artist": "ARTIST",
+      "tourism": "TOURISM",
+      "original": "ORIGINAL",
+      "youtube": "📺 YouTube",
+      "mp3": "🎵 MP3"
+    },
+    "empty": "該当する楽曲が見つかりませんでした。フィルタを変更してお試しください。",
+    "modal": {
+      "inquire": "この楽曲について問い合わせ →",
+      "openYoutube": "YouTube で開く",
+      "comingSoon": "COMING SOON",
+      "year": "YEAR",
+      "duration": "DURATION",
+      "client": "CLIENT",
+      "artist": "ARTIST"
+    },
+    "cta": {
+      "badge": "WANT MORE?",
+      "title1": "2,980+",
+      "title2": "MORE TRACKS",
+      "title3": "IN THE VAULT.",
+      "subtitle": "あなたのプロジェクトに合う一曲、必ずあります。",
+      "primary": "カスタム楽曲を依頼 →",
+      "secondary": "SEE CLIENTS"
+    }
+  },
+  "ClientsPage": {
+    "hero": {
+      "badge": "CLIENTS",
+      "title1": "TRUSTED",
+      "title2": "BY THE BEST",
+      "subtitle": "音楽を必要としてきたパートナーたち",
+      "subtitleEn": "Partners who needed the music."
+    },
+    "cta": {
+      "title1": "YOUR PROJECT",
+      "title2": "IS NEXT.",
+      "subtitle": "次は、あなたのプロジェクトに音楽を。",
+      "button": "お問い合わせ →",
+      "jasrac": "JASRAC REGISTERED"
+    }
+  },
+  "NewsPage": {
+    "hero": {
+      "badge": "NEWS",
+      "title1": "LATEST",
+      "title2": "NEWS",
+      "subtitle": "最新のリリース情報"
+    },
+    "featuredBadge": "FEATURED",
+    "readMore": "READ MORE →",
+    "moreStories": "MORE STORIES",
+    "empty": "まだニュースはありません。近日中に更新予定です。",
+    "comingSoon": "近日中に最新情報を掲載します",
+    "backToNews": "← BACK TO NEWS",
+    "relatedWorks": "RELATED WORKS",
+    "cta": "お問い合わせ →"
+  },
+  "ContactPage": {
+    "hero": {
+      "badge": "CONTACT",
+      "title1": "LET'S",
+      "title2": "TALK.",
+      "subtitle": "あなたのプロジェクトに音楽を。",
+      "subtitleEn": "Tell us about your project."
+    },
+    "info": {
+      "responseTitle": "RESPONSE TIME",
+      "responseTitleJa": "返信時間",
+      "responseEn": "Typically within 24 hours.",
+      "responseJa": "24時間以内に返信",
+      "deliveryTitle": "DELIVERY",
+      "deliveryTitleJa": "納品スピード",
+      "deliveryValue": "3-7 DAYS",
+      "deliveryJa": "最短3日、標準1週間",
+      "rightsTitle": "RIGHTS",
+      "rightsTitleJa": "権利",
+      "rightsEn": "JASRAC registered.",
+      "rightsJa": "JASRAC登録済み",
+      "rightsNote": "Composition & lyrics: original works.",
+      "languagesTitle": "LANGUAGES",
+      "languagesTitleJa": "対応言語",
+      "languagesEn": "Japanese / English",
+      "languagesJa": "日本語・英語"
+    },
+    "form": {
+      "referencedTrack": "楽曲についてのお問い合わせ",
+      "name": "お名前",
+      "nameEn": "NAME",
+      "email": "メールアドレス",
+      "emailEn": "EMAIL",
+      "company": "会社名",
+      "companyEn": "COMPANY",
+      "projectType": "プロジェクト種別",
+      "projectTypeEn": "PROJECT TYPE",
+      "projectTypeSelect": "選択してください / Select...",
+      "projectTypeCm": "CM / TV Commercial",
+      "projectTypeMovie": "映画 / Movie",
+      "projectTypeArtist": "アーティスト楽曲 / Artist Song",
+      "projectTypeEvent": "イベント / Event",
+      "projectTypeOther": "その他 / Other",
+      "budget": "予算",
+      "budgetEn": "BUDGET",
+      "budgetTbd": "未定 / TBD",
+      "budget1": "〜10万円",
+      "budget2": "10〜50万円",
+      "budget3": "50〜100万円",
+      "budget4": "100万円以上",
+      "budget5": "相談したい",
+      "timeline": "希望納期",
+      "timelineEn": "TIMELINE",
+      "timelineTbd": "未定 / TBD",
+      "timeline1": "最短 3日",
+      "timeline2": "1週間",
+      "timeline3": "2週間",
+      "timeline4": "1ヶ月",
+      "timeline5": "柔軟に対応",
+      "message": "プロジェクト詳細",
+      "messageEn": "MESSAGE",
+      "consentPrefix": "",
+      "consentLinkText": "プライバシーポリシー",
+      "consentSuffix": "に同意します。",
+      "submit": "SEND MESSAGE →",
+      "submitting": "SENDING...",
+      "errorText": "送信に失敗しました。時間を置いて再度お試しください。",
+      "successTitle1": "MESSAGE",
+      "successTitle2": "RECEIVED!",
+      "successJa": "お問い合わせを受け付けました。",
+      "successEn": "24時間以内にご返信いたします。"
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "よくある質問"
+    }
+  }
+}

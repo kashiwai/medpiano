@@ -1,0 +1,283 @@
+{
+  "Meta": {
+    "siteName": "MedPiano",
+    "description": "Official site of MedPiano, the faceless composer. 10+ years, 3,000+ songs. CM, film and artist commissions, SONY Music collaboration."
+  },
+  "Nav": {
+    "home": "HOME",
+    "profile": "PROFILE",
+    "works": "WORKS",
+    "clients": "CLIENTS",
+    "news": "NEWS",
+    "contact": "CONTACT"
+  },
+  "MobileNav": {
+    "home": "Home",
+    "profile": "Profile",
+    "works": "Works",
+    "clients": "Clients",
+    "news": "News",
+    "contact": "Contact"
+  },
+  "Footer": {
+    "tagline": "The faceless composer. 10 years in the shadows. 3,000+ songs and counting.",
+    "jasrac": "JASRAC Registered",
+    "since": "Since 2014",
+    "site": "SITE",
+    "legal": "LEGAL",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "copyright": "All songs are original works. JASRAC registered.",
+    "madeIn": "MADE IN THE SHADOWS 🎹"
+  },
+  "HomePage": {
+    "hero": {
+      "title1": "MEET",
+      "title2": "MED",
+      "title3": "PIANO",
+      "subtitle": "The Mysterious Composer",
+      "tagline": "10 years in the shadows",
+      "taglineEn": "THE FACELESS COMPOSER"
+    },
+    "mystery": {
+      "title": "WHO IS MEDPIANO?",
+      "subtitle": "The only thing we know is the music.",
+      "age": "Age unknown",
+      "gender": "Gender undisclosed",
+      "face": "Face never shown",
+      "cta": "SEE THE FULL PROFILE →"
+    },
+    "numbers": {
+      "songs": "Songs composed",
+      "years": "Years active",
+      "prefectures": "Tourism boards served"
+    },
+    "featured": {
+      "badge": "FEATURED WORKS",
+      "title1": "HEAR THE",
+      "title2": "MUSIC",
+      "subtitle": "A handpicked selection of signature tracks",
+      "cta": "VIEW ALL 20 WORKS →"
+    },
+    "clients": {
+      "title": "TRUSTED BY",
+      "subtitle": "Partners with proven results"
+    },
+    "cta": {
+      "title1": "LET'S MAKE",
+      "title2": "MUSIC",
+      "title3": "TOGETHER.",
+      "subtitle": "Let's make music together.",
+      "button": "Get in touch →",
+      "jasrac": "JASRAC REGISTERED"
+    }
+  },
+  "ProfilePage": {
+    "hero": {
+      "badge": "PROFILE",
+      "title1": "WHO IS",
+      "title2": "MEDPIANO?",
+      "quote": "The only thing we know is the music.",
+      "quoteEn": "THE ONLY THING WE KNOW IS THE MUSIC.",
+      "cards": {
+        "age": { "label": "AGE", "ja": "Unknown", "desc": "Unknown for over a decade" },
+        "gender": { "label": "GENDER", "ja": "Undisclosed", "desc": "Never disclosed" },
+        "face": { "label": "FACE", "ja": "Never shown", "desc": "No photo, no video, ever" }
+      }
+    },
+    "obsession": {
+      "badge": "Purely a labor of love",
+      "title1": "PURE",
+      "title2": "OBSESSION",
+      "line1": "Falling for the Japanese",
+      "line2": "pop scene for 10 years",
+      "quote": "\"Not a job. It's a passion.\"",
+      "quoteJa": "Not a job. It's a passion."
+    },
+    "timeline": {
+      "badge": "TIMELINE",
+      "title": "10+ YEARS IN THE SHADOWS",
+      "growthEn": "FROM QUIET COMPOSER TO PROLIFIC POWERHOUSE",
+      "growthJa": "From quiet composer to prolific powerhouse."
+    },
+    "stats": {
+      "badge": "BY THE NUMBERS",
+      "title": "THE PROOF"
+    },
+    "speed": {
+      "badge": "STUDIO TURNAROUND",
+      "title1": "SONIC",
+      "title2": "SPEED",
+      "subtitle": "Blazing-fast production speed",
+      "fastest": "Fastest delivery",
+      "standard": "Standard pace",
+      "quality1": "HIGH QUALITY.",
+      "qualityJa": "No compromise, ever.",
+      "quality2": "NO COMPROMISE."
+    },
+    "manifesto": {
+      "en1": "MUSIC IS NOT A JOB.",
+      "en2": "IT'S THE ONLY LANGUAGE",
+      "en3": "I SPEAK WITHOUT A FACE.",
+      "ja1": "Music is not a job.",
+      "ja2": "It's the only language I speak without a face."
+    },
+    "cta": {
+      "title": "NEXT: HEAR THE MUSIC",
+      "subtitle": "20 tracks, hand-picked from an archive of 3,000+",
+      "primary": "VIEW WORKS →",
+      "secondary": "Contact"
+    }
+  },
+  "WorksPage": {
+    "hero": {
+      "badge": "WORKS",
+      "title1": "20",
+      "title2": "SELECTED",
+      "title3": "TRACKS",
+      "subtitle": "20 hand-picked tracks from a 3,000+ archive.",
+      "subtitleEn": "20 hand-picked tracks from a 3,000+ archive.",
+      "badge1": "🎵 MP3 SAMPLES",
+      "badge2": "📺 YOUTUBE EMBEDS",
+      "badge3": "⚡ INSTANT PLAY"
+    },
+    "filters": {
+      "all": "ALL",
+      "cm": "CM",
+      "movie": "MOVIE",
+      "artist": "ARTIST",
+      "tourism": "TOURISM",
+      "original": "ORIGINAL",
+      "youtube": "📺 YouTube",
+      "mp3": "🎵 MP3"
+    },
+    "empty": "No tracks matched your filters. Try a different combination.",
+    "modal": {
+      "inquire": "Ask about this track →",
+      "openYoutube": "Open on YouTube",
+      "comingSoon": "COMING SOON",
+      "year": "YEAR",
+      "duration": "DURATION",
+      "client": "CLIENT",
+      "artist": "ARTIST"
+    },
+    "cta": {
+      "badge": "WANT MORE?",
+      "title1": "2,980+",
+      "title2": "MORE TRACKS",
+      "title3": "IN THE VAULT.",
+      "subtitle": "There's a track for your project. Guaranteed.",
+      "primary": "Request a custom track →",
+      "secondary": "SEE CLIENTS"
+    }
+  },
+  "ClientsPage": {
+    "hero": {
+      "badge": "CLIENTS",
+      "title1": "TRUSTED",
+      "title2": "BY THE BEST",
+      "subtitle": "Partners who needed the music.",
+      "subtitleEn": "Partners who needed the music."
+    },
+    "cta": {
+      "title1": "YOUR PROJECT",
+      "title2": "IS NEXT.",
+      "subtitle": "Your project could be next.",
+      "button": "Get in touch →",
+      "jasrac": "JASRAC REGISTERED"
+    }
+  },
+  "NewsPage": {
+    "hero": {
+      "badge": "NEWS",
+      "title1": "LATEST",
+      "title2": "NEWS",
+      "subtitle": "The latest releases and announcements"
+    },
+    "featuredBadge": "FEATURED",
+    "readMore": "READ MORE →",
+    "moreStories": "MORE STORIES",
+    "empty": "No news yet. Check back soon.",
+    "comingSoon": "Updates coming soon",
+    "backToNews": "← BACK TO NEWS",
+    "relatedWorks": "RELATED WORKS",
+    "cta": "Get in touch →"
+  },
+  "ContactPage": {
+    "hero": {
+      "badge": "CONTACT",
+      "title1": "LET'S",
+      "title2": "TALK.",
+      "subtitle": "Tell us about your project.",
+      "subtitleEn": "Tell us about your project."
+    },
+    "info": {
+      "responseTitle": "RESPONSE TIME",
+      "responseTitleJa": "Response time",
+      "responseEn": "Typically within 24 hours.",
+      "responseJa": "Typically within 24 hours.",
+      "deliveryTitle": "DELIVERY",
+      "deliveryTitleJa": "Delivery speed",
+      "deliveryValue": "3-7 DAYS",
+      "deliveryJa": "3 days fastest, 1 week standard",
+      "rightsTitle": "RIGHTS",
+      "rightsTitleJa": "Rights",
+      "rightsEn": "JASRAC registered.",
+      "rightsJa": "JASRAC registered.",
+      "rightsNote": "Composition & lyrics: original works.",
+      "languagesTitle": "LANGUAGES",
+      "languagesTitleJa": "Languages",
+      "languagesEn": "Japanese / English",
+      "languagesJa": "Japanese / English"
+    },
+    "form": {
+      "referencedTrack": "Inquiring about a track",
+      "name": "Name",
+      "nameEn": "NAME",
+      "email": "Email",
+      "emailEn": "EMAIL",
+      "company": "Company",
+      "companyEn": "COMPANY",
+      "projectType": "Project type",
+      "projectTypeEn": "PROJECT TYPE",
+      "projectTypeSelect": "Select...",
+      "projectTypeCm": "CM / TV Commercial",
+      "projectTypeMovie": "Movie",
+      "projectTypeArtist": "Artist Song",
+      "projectTypeEvent": "Event",
+      "projectTypeOther": "Other",
+      "budget": "Budget",
+      "budgetEn": "BUDGET",
+      "budgetTbd": "TBD",
+      "budget1": "Under ¥100k",
+      "budget2": "¥100k–500k",
+      "budget3": "¥500k–1M",
+      "budget4": "Over ¥1M",
+      "budget5": "Let's discuss",
+      "timeline": "Timeline",
+      "timelineEn": "TIMELINE",
+      "timelineTbd": "TBD",
+      "timeline1": "3 days (fastest)",
+      "timeline2": "1 week",
+      "timeline3": "2 weeks",
+      "timeline4": "1 month",
+      "timeline5": "Flexible",
+      "message": "Project details",
+      "messageEn": "MESSAGE",
+      "consentPrefix": "I agree to the ",
+      "consentLinkText": "privacy policy",
+      "consentSuffix": ".",
+      "submit": "SEND MESSAGE →",
+      "submitting": "SENDING...",
+      "errorText": "Something went wrong. Please try again in a moment.",
+      "successTitle1": "MESSAGE",
+      "successTitle2": "RECEIVED!",
+      "successJa": "Your message has been received.",
+      "successEn": "We'll get back to you within 24 hours."
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "Frequently Asked Questions"
+    }
+  }
+}
