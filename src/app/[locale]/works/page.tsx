@@ -4,7 +4,11 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PillBadge } from "@/components/ui/PillBadge";
 import { Button } from "@/components/ui/Button";
 import { WorksGrid } from "@/components/tracks/WorksGrid";
+import { UploadedGallery } from "@/components/UploadedGallery";
 import type { Locale } from "@/lib/types";
+
+// アップロード済みメディアを常に最新の状態で表示するため動的レンダリングにする
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -58,6 +62,8 @@ export default async function WorksPage({ params }: { params: Promise<{ locale: 
           </div>
         </div>
       </section>
+
+      <UploadedGallery />
 
       <Suspense>
         <WorksGrid />
