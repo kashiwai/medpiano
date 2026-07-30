@@ -1,5 +1,5 @@
 import { list } from "@vercel/blob";
-import { getMediaOverrides } from "@/lib/blobMetadata";
+import { getMediaOverrides, normalizePathname } from "@/lib/blobMetadata";
 import type { Track } from "@/lib/types";
 
 function displayTitle(pathname: string): string {
@@ -53,8 +53,8 @@ export async function getUploadedTracks(): Promise<Track[]> {
   ]);
 
   const all = [
-    ...tracks.map((blob) => toTrack(blob, "audio", overrides[blob.pathname]?.displayName)),
-    ...videos.map((blob) => toTrack(blob, "video", overrides[blob.pathname]?.displayName)),
+    ...tracks.map((blob) => toTrack(blob, "audio", overrides[normalizePathname(blob.pathname)]?.displayName)),
+    ...videos.map((blob) => toTrack(blob, "video", overrides[normalizePathname(blob.pathname)]?.displayName)),
   ];
 
   return all.sort((a, b) => b.year - a.year);

@@ -1,6 +1,6 @@
-import { list } from "@vercel/blob";
+import { list, del } from "@vercel/blob";
 import { NextResponse } from "next/server";
-import { getMediaOverrides, setMediaOverride } from "@/lib/blobMetadata";
+import { getMediaOverrides, setMediaOverride, removeMediaOverride, normalizePathname } from "@/lib/blobMetadata";
 
 async function listUploaded(prefix: "tracks/" | "videos/") {
   if (!process.env.BLOB_READ_WRITE_TOKEN) return [];
@@ -26,7 +26,7 @@ export async function GET() {
     url: blob.url,
     uploadedAt: blob.uploadedAt,
     kind,
-    displayName: overrides[blob.pathname]?.displayName ?? null,
+    displayName: overrides[normalizePathname(blob.pathname)]?.displayName ?? null,
   });
 
   return NextResponse.json({
@@ -53,5 +53,25 @@ export async function PATCH(request: Request) {
   }
 
   await setMediaOverride(pathname, { displayName: displayName.trim() || undefined });
+  return NextResponse.json({ ok: true });
+}
+
+export async function DELETE(request: Request) {
+  const body = await request.json();
+  const { pathname, url, password } = body as {
+    pathname?: string;
+    url?: string;
+    password?: string;
+  };
+
+  if (!process.env.UPLOAD_PASSWORD || password !== process.env.UPLOAD_PASSWORD) {
+    return NextResponse.json({ error: "パスワードが違います。" }, { status: 401 });
+  }
+  if (!pathname || !url) {
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
+
+  await del(url);
+  await removeMediaOverride(pathname);
   return NextResponse.json({ ok: true });
 }

@@ -20,6 +20,7 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
   const [items, setItems] = useState<MediaItem[]>([]);
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [savingPathname, setSavingPathname] = useState<string | null>(null);
+  const [deletingPathname, setDeletingPathname] = useState<string | null>(null);
   const [savedMessage, setSavedMessage] = useState<Record<string, string>>({});
   const [loaded, setLoaded] = useState(false);
 
@@ -69,6 +70,30 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
     }
   }
 
+  async function handleDelete(item: MediaItem, label: string) {
+    const confirmed = window.confirm(`「${label}」を削除します。この操作は取り消せません。よろしいですか？`);
+    if (!confirmed) return;
+
+    setDeletingPathname(item.pathname);
+    try {
+      const res = await fetch("/api/media", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pathname: item.pathname, url: item.url, password }),
+      });
+      if (res.ok) {
+        setItems((prev) => prev.filter((i) => i.pathname !== item.pathname));
+      } else {
+        const data = await res.json().catch(() => null);
+        setSavedMessage((prev) => ({ ...prev, [item.pathname]: `❌ ${data?.error ?? "削除に失敗しました"}` }));
+      }
+    } catch {
+      setSavedMessage((prev) => ({ ...prev, [item.pathname]: "❌ 通信エラーが発生しました" }));
+    } finally {
+      setDeletingPathname(null);
+    }
+  }
+
   if (!loaded) return null;
   if (items.length === 0) {
     return <p className="font-dm text-sm text-black/50">まだアップロードされたファイルがありません。</p>;
@@ -93,13 +118,21 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
                 onChange={(e) => setDrafts((prev) => ({ ...prev, [item.pathname]: e.target.value }))}
                 className={`${inputStyles} flex-1`}
                 placeholder="表示名"
+                disabled={deletingPathname === item.pathname}
               />
               <button
                 onClick={() => handleSave(item.pathname, current)}
-                disabled={savingPathname === item.pathname}
+                disabled={savingPathname === item.pathname || deletingPathname === item.pathname}
                 className="shrink-0 rounded-full border-[3px] border-black bg-magenta px-4 py-2 font-anton text-xs uppercase shadow-sticker-sm hover:rotate-[-2deg] transition-transform disabled:opacity-50"
               >
                 {savingPathname === item.pathname ? "Saving..." : "Save"}
+              </button>
+              <button
+                onClick={() => handleDelete(item, current)}
+                disabled={deletingPathname === item.pathname}
+                className="shrink-0 rounded-full border-[3px] border-black bg-cream px-4 py-2 font-anton text-xs uppercase text-black/70 shadow-sticker-sm hover:bg-black hover:text-cream transition-colors disabled:opacity-50"
+              >
+                {deletingPathname === item.pathname ? "Deleting..." : "🗑 Delete"}
               </button>
               <a
                 href={item.url}
