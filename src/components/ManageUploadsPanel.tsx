@@ -3,12 +3,26 @@
 import { useCallback, useEffect, useState } from "react";
 import { inputStyles } from "@/components/ui/FormField";
 
+type MediaCategory = "music" | "music-video" | "movie";
+
 type MediaItem = {
   pathname: string;
   url: string;
   uploadedAt: string;
   kind: "audio" | "video";
   displayName: string | null;
+  category: MediaCategory;
+  year: number;
+  lyrics: string | null;
+  description: string | null;
+};
+
+type Draft = {
+  displayName?: string;
+  category?: MediaCategory;
+  year?: string;
+  lyrics?: string;
+  description?: string;
 };
 
 function fallbackName(pathname: string): string {
@@ -18,7 +32,7 @@ function fallbackName(pathname: string): string {
 
 export function ManageUploadsPanel({ password, refreshKey }: { password: string; refreshKey: number }) {
   const [items, setItems] = useState<MediaItem[]>([]);
-  const [drafts, setDrafts] = useState<Record<string, string>>({});
+  const [drafts, setDrafts] = useState<Record<string, Draft>>({});
   const [savingPathname, setSavingPathname] = useState<string | null>(null);
   const [deletingPathname, setDeletingPathname] = useState<string | null>(null);
   const [savedMessage, setSavedMessage] = useState<Record<string, string>>({});
@@ -39,32 +53,54 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
     load();
   }, [load, refreshKey]);
 
-  async function handleSave(pathname: string, currentValue: string) {
-    // 入力欄を編集せずにSaveを押しても、表示中の値（既存の名前）をそのまま送る。
-    // drafts[pathname] だけを見て空文字を送ってしまうと、既存の表示名が消えてしまうバグを防ぐ。
-    const displayName = (drafts[pathname] ?? currentValue).trim();
+  function setDraft(pathname: string, patch: Draft) {
+    setDrafts((prev) => ({ ...prev, [pathname]: { ...prev[pathname], ...patch } }));
+  }
+
+  async function handleSave(item: MediaItem) {
+    const draft = drafts[item.pathname] ?? {};
+    // 編集欄を触らずSaveを押しても、表示中の値（既存の値）をそのまま送る。
+    // draft だけを見て空文字を送ってしまうと、既存の値が消えてしまうバグを防ぐ。
+    const displayName = (draft.displayName ?? item.displayName ?? fallbackName(item.pathname)).trim();
     if (!displayName) {
-      setSavedMessage((prev) => ({ ...prev, [pathname]: "❌ 表示名を空にはできません" }));
+      setSavedMessage((prev) => ({ ...prev, [item.pathname]: "❌ 表示名を空にはできません" }));
       return;
     }
+    const category = draft.category ?? item.category;
+    const yearRaw = draft.year ?? String(item.year);
+    const year = Number(yearRaw);
+    if (!Number.isFinite(year) || year < 1900 || year > 2100) {
+      setSavedMessage((prev) => ({ ...prev, [item.pathname]: "❌ 制作年が正しくありません" }));
+      return;
+    }
+    const lyrics = draft.lyrics ?? item.lyrics ?? "";
+    const description = draft.description ?? item.description ?? "";
 
-    setSavingPathname(pathname);
-    setSavedMessage((prev) => ({ ...prev, [pathname]: "" }));
+    setSavingPathname(item.pathname);
+    setSavedMessage((prev) => ({ ...prev, [item.pathname]: "" }));
     try {
       const res = await fetch("/api/media", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pathname, displayName, password }),
+        body: JSON.stringify({
+          pathname: item.pathname,
+          displayName,
+          category,
+          year,
+          lyrics,
+          description,
+          password,
+        }),
       });
       if (res.ok) {
         await load();
-        setSavedMessage((prev) => ({ ...prev, [pathname]: "✅ 保存しました" }));
+        setSavedMessage((prev) => ({ ...prev, [item.pathname]: "✅ 保存しました" }));
       } else {
         const data = await res.json().catch(() => null);
-        setSavedMessage((prev) => ({ ...prev, [pathname]: `❌ ${data?.error ?? "保存に失敗しました"}` }));
+        setSavedMessage((prev) => ({ ...prev, [item.pathname]: `❌ ${data?.error ?? "保存に失敗しました"}` }));
       }
     } catch {
-      setSavedMessage((prev) => ({ ...prev, [pathname]: "❌ 通信エラーが発生しました" }));
+      setSavedMessage((prev) => ({ ...prev, [item.pathname]: "❌ 通信エラーが発生しました" }));
     } finally {
       setSavingPathname(null);
     }
@@ -102,46 +138,104 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
   return (
     <div className="flex flex-col gap-3">
       {items.map((item) => {
-        const current = drafts[item.pathname] ?? item.displayName ?? fallbackName(item.pathname);
+        const draft = drafts[item.pathname] ?? {};
+        const currentName = draft.displayName ?? item.displayName ?? fallbackName(item.pathname);
+        const currentCategory = draft.category ?? item.category;
+        const currentYear = draft.year ?? String(item.year);
+        const currentLyrics = draft.lyrics ?? item.lyrics ?? "";
+        const currentDescription = draft.description ?? item.description ?? "";
+        const busy = savingPathname === item.pathname || deletingPathname === item.pathname;
+
         return (
           <div key={item.pathname} className="flex flex-col gap-1">
-            <div className="flex flex-col gap-2 rounded-2xl border-[3px] border-black bg-cream-light p-4 sm:flex-row sm:items-center">
-              <span
-                className={`shrink-0 rounded-full border-[2px] border-black px-3 py-1 font-anton text-xs uppercase ${
-                  item.kind === "video" ? "bg-sun" : "bg-teal"
-                }`}
-              >
-                {item.kind === "video" ? "🎬 Video" : "🎧 Track"}
-              </span>
-              <input
-                value={current}
-                onChange={(e) => setDrafts((prev) => ({ ...prev, [item.pathname]: e.target.value }))}
-                className={`${inputStyles} flex-1`}
-                placeholder="表示名"
-                disabled={deletingPathname === item.pathname}
-              />
-              <button
-                onClick={() => handleSave(item.pathname, current)}
-                disabled={savingPathname === item.pathname || deletingPathname === item.pathname}
-                className="shrink-0 rounded-full border-[3px] border-black bg-magenta px-4 py-2 font-anton text-xs uppercase shadow-sticker-sm hover:rotate-[-2deg] transition-transform disabled:opacity-50"
-              >
-                {savingPathname === item.pathname ? "Saving..." : "Save"}
-              </button>
-              <button
-                onClick={() => handleDelete(item, current)}
-                disabled={deletingPathname === item.pathname}
-                className="shrink-0 rounded-full border-[3px] border-black bg-cream px-4 py-2 font-anton text-xs uppercase text-black/70 shadow-sticker-sm hover:bg-black hover:text-cream transition-colors disabled:opacity-50"
-              >
-                {deletingPathname === item.pathname ? "Deleting..." : "🗑 Delete"}
-              </button>
-              <a
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="shrink-0 font-anton text-xs uppercase text-black/40 hover:text-black"
-              >
-                ↗
-              </a>
+            <div className="flex flex-col gap-3 rounded-2xl border-[3px] border-black bg-cream-light p-4">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                <span
+                  className={`shrink-0 rounded-full border-[2px] border-black px-3 py-1 font-anton text-xs uppercase ${
+                    item.kind === "video" ? "bg-sun" : "bg-teal"
+                  }`}
+                >
+                  {item.kind === "video" ? "🎬 Video" : "🎧 Track"}
+                </span>
+                <input
+                  value={currentName}
+                  onChange={(e) => setDraft(item.pathname, { displayName: e.target.value })}
+                  className={`${inputStyles} flex-1`}
+                  placeholder="表示名"
+                  disabled={busy}
+                />
+                <input
+                  type="number"
+                  value={currentYear}
+                  onChange={(e) => setDraft(item.pathname, { year: e.target.value })}
+                  className={`${inputStyles} w-full sm:w-28`}
+                  placeholder="制作年"
+                  disabled={busy}
+                />
+                <button
+                  onClick={() => handleSave(item)}
+                  disabled={busy}
+                  className="shrink-0 rounded-full border-[3px] border-black bg-magenta px-4 py-2 font-anton text-xs uppercase shadow-sticker-sm hover:rotate-[-2deg] transition-transform disabled:opacity-50"
+                >
+                  {savingPathname === item.pathname ? "Saving..." : "Save"}
+                </button>
+                <button
+                  onClick={() => handleDelete(item, currentName)}
+                  disabled={busy}
+                  className="shrink-0 rounded-full border-[3px] border-black bg-cream px-4 py-2 font-anton text-xs uppercase text-black/70 shadow-sticker-sm hover:bg-black hover:text-cream transition-colors disabled:opacity-50"
+                >
+                  {deletingPathname === item.pathname ? "Deleting..." : "🗑 Delete"}
+                </button>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 font-anton text-xs uppercase text-black/40 hover:text-black"
+                >
+                  ↗
+                </a>
+              </div>
+
+              {item.kind === "video" ? (
+                <div className="flex gap-2">
+                  {(["music-video", "movie"] as const).map((c) => (
+                    <button
+                      key={c}
+                      onClick={() => setDraft(item.pathname, { category: c })}
+                      disabled={busy}
+                      className={`rounded-full border-[2px] border-black px-3 py-1 font-anton text-xs uppercase transition-colors disabled:opacity-50 ${
+                        currentCategory === c ? "bg-magenta" : "bg-cream text-black/50"
+                      }`}
+                    >
+                      {c === "music-video" ? "🎵 Music Video" : "🎥 Movie"}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <span className="w-fit rounded-full border-[2px] border-black bg-teal px-3 py-1 font-anton text-xs uppercase">
+                  🎵 Music
+                </span>
+              )}
+
+              {(item.kind === "audio" || currentCategory === "music-video") && (
+                <textarea
+                  value={currentLyrics}
+                  onChange={(e) => setDraft(item.pathname, { lyrics: e.target.value })}
+                  className={`${inputStyles} min-h-24`}
+                  placeholder="歌詞（任意）"
+                  disabled={busy}
+                />
+              )}
+
+              {item.kind === "video" && currentCategory === "movie" && (
+                <textarea
+                  value={currentDescription}
+                  onChange={(e) => setDraft(item.pathname, { description: e.target.value })}
+                  className={`${inputStyles} min-h-24`}
+                  placeholder="内容・あらすじ（任意）"
+                  disabled={busy}
+                />
+              )}
             </div>
             {savedMessage[item.pathname] && (
               <p className="pl-2 font-dm text-xs text-black/60">{savedMessage[item.pathname]}</p>

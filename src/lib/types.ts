@@ -1,7 +1,7 @@
 // ============================================
 // TRACK — 楽曲データ
 // ============================================
-export type TrackCategory = "cm" | "movie" | "artist" | "tourism" | "original";
+export type TrackCategory = "cm" | "movie" | "artist" | "tourism" | "original" | "music" | "music-video";
 
 export type Track = {
   id: string;
@@ -25,6 +25,7 @@ export type Track = {
   artist?: string | null;
   descriptionEn?: string;
   descriptionJa?: string;
+  lyrics?: string | null;
 
   featured: boolean;
   isNew?: boolean;

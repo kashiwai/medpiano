@@ -65,6 +65,10 @@ export function categoryColor(category: TrackCategory | NewsCategory | string): 
       return "teal";
     case "original":
       return "magenta";
+    case "music":
+      return "teal";
+    case "music-video":
+      return "magenta";
     case "release":
       return "magenta";
     case "mv":
@@ -78,6 +82,16 @@ export function categoryColor(category: TrackCategory | NewsCategory | string): 
     default:
       return "teal";
   }
+}
+
+// "music-video" のようなハイフン区切りのカテゴリはバッジ表示上そのまま大文字化すると読みにくいため専用マップを使う
+const categoryLabelMap: Partial<Record<TrackCategory, string>> = {
+  music: "MUSIC",
+  "music-video": "MUSIC VIDEO",
+};
+
+export function categoryLabel(category: TrackCategory | string): string {
+  return categoryLabelMap[category as TrackCategory] ?? category.toUpperCase();
 }
 
 export function r2Url(path: string): string {

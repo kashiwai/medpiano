@@ -2,8 +2,14 @@ import { list, put, del } from "@vercel/blob";
 
 const METADATA_PREFIX = "metadata/overrides/";
 
+export type MediaCategory = "music" | "music-video" | "movie";
+
 export type MediaOverride = {
   displayName?: string;
+  category?: MediaCategory;
+  year?: number;
+  lyrics?: string;
+  description?: string;
 };
 
 export type MediaOverrides = Record<string, MediaOverride>;
@@ -43,6 +49,21 @@ export async function getMediaOverrides(): Promise<MediaOverrides> {
     );
 
     return Object.fromEntries(entries.filter((entry): entry is [string, MediaOverride] => entry !== null));
+  } catch {
+    return {};
+  }
+}
+
+// 1件だけ上書き情報を読む。PATCHで一部フィールドだけ更新する際に
+// 既存の他フィールド（歌詞・カテゴリ等）を消さないよう、まずこれで現在値を取得してからマージする。
+export async function getMediaOverride(pathname: string): Promise<MediaOverride> {
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return {};
+  try {
+    const { blobs } = await list({ prefix: overridePathname(pathname) });
+    if (blobs.length === 0) return {};
+    const res = await fetch(`${blobs[0].url}?v=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) return {};
+    return (await res.json()) as MediaOverride;
   } catch {
     return {};
   }

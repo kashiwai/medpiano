@@ -1,5 +1,5 @@
 import { list } from "@vercel/blob";
-import { getMediaOverrides, normalizePathname } from "@/lib/blobMetadata";
+import { getMediaOverrides, normalizePathname, type MediaOverride } from "@/lib/blobMetadata";
 import type { Track } from "@/lib/types";
 
 function displayTitle(pathname: string): string {
@@ -24,21 +24,27 @@ async function safeList(prefix: string) {
 function toTrack(
   blob: { pathname: string; url: string; uploadedAt: Date | string },
   kind: "audio" | "video",
-  overrideName?: string,
+  override: MediaOverride = {},
 ): Track {
-  const title = (overrideName || displayTitle(blob.pathname).replace(/[-_]/g, " ")).toUpperCase();
+  const title = (override.displayName || displayTitle(blob.pathname).replace(/[-_]/g, " ")).toUpperCase();
+  // 動画はデフォルトで「MUSIC VIDEO」、実際はストーリー映像などの場合は
+  // 管理画面で "movie" に切り替える運用（両者ともアップロード先のフォルダは videos/ で共通）。
+  const category = override.category ?? (kind === "audio" ? "music" : "music-video");
   return {
     id: blob.url,
     slug: blob.url,
     titleEn: title,
     titleJa: title,
-    category: "original",
-    year: new Date(blob.uploadedAt).getFullYear(),
+    category,
+    // アップロード日時ではなく、管理画面で設定した実際の制作年を優先する。
+    year: override.year ?? new Date(blob.uploadedAt).getFullYear(),
     duration: 0,
     mediaUrl: blob.url,
     mediaKind: kind,
     featured: false,
     tags: [],
+    lyrics: override.lyrics ?? null,
+    descriptionJa: category === "movie" ? override.description : undefined,
   };
 }
 
@@ -53,8 +59,8 @@ export async function getUploadedTracks(): Promise<Track[]> {
   ]);
 
   const all = [
-    ...tracks.map((blob) => toTrack(blob, "audio", overrides[normalizePathname(blob.pathname)]?.displayName)),
-    ...videos.map((blob) => toTrack(blob, "video", overrides[normalizePathname(blob.pathname)]?.displayName)),
+    ...tracks.map((blob) => toTrack(blob, "audio", overrides[normalizePathname(blob.pathname)])),
+    ...videos.map((blob) => toTrack(blob, "video", overrides[normalizePathname(blob.pathname)])),
   ];
 
   return all.sort((a, b) => b.year - a.year);
