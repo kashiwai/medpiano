@@ -4,6 +4,18 @@ import { useCallback, useEffect, useState } from "react";
 import { inputStyles } from "@/components/ui/FormField";
 
 type MediaCategory = "music" | "music-video" | "movie";
+type MediaGenre = "jpop" | "rock" | "ballad" | "anime-movie" | "cm-tieup" | "edm-dance";
+
+// blobMetadata.ts はサーバー専用の @vercel/blob に依存しているため、
+// クライアントコンポーネントからはこの型・定数をここでも複製しておく。
+const GENRE_OPTIONS: { value: MediaGenre; label: string }[] = [
+  { value: "jpop", label: "J-POP" },
+  { value: "rock", label: "ロック" },
+  { value: "ballad", label: "バラード" },
+  { value: "anime-movie", label: "アニメ・映画主題歌" },
+  { value: "cm-tieup", label: "CM・タイアップ" },
+  { value: "edm-dance", label: "EDM・ダンス" },
+];
 
 type MediaItem = {
   pathname: string;
@@ -12,6 +24,7 @@ type MediaItem = {
   kind: "audio" | "video";
   displayName: string | null;
   category: MediaCategory;
+  genre: MediaGenre | null;
   year: number;
   lyrics: string | null;
   description: string | null;
@@ -20,6 +33,7 @@ type MediaItem = {
 type Draft = {
   displayName?: string;
   category?: MediaCategory;
+  genre?: MediaGenre | "";
   year?: string;
   lyrics?: string;
   description?: string;
@@ -67,6 +81,7 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
       return;
     }
     const category = draft.category ?? item.category;
+    const genre = draft.genre ?? item.genre ?? "";
     const yearRaw = draft.year ?? String(item.year);
     const year = Number(yearRaw);
     if (!Number.isFinite(year) || year < 1900 || year > 2100) {
@@ -86,6 +101,7 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
           pathname: item.pathname,
           displayName,
           category,
+          genre,
           year,
           lyrics,
           description,
@@ -141,6 +157,7 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
         const draft = drafts[item.pathname] ?? {};
         const currentName = draft.displayName ?? item.displayName ?? fallbackName(item.pathname);
         const currentCategory = draft.category ?? item.category;
+        const currentGenre = draft.genre ?? item.genre ?? "";
         const currentYear = draft.year ?? String(item.year);
         const currentLyrics = draft.lyrics ?? item.lyrics ?? "";
         const currentDescription = draft.description ?? item.description ?? "";
@@ -216,6 +233,23 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
                   🎵 Music
                 </span>
               )}
+
+              <div className="flex flex-wrap gap-2">
+                {GENRE_OPTIONS.map((g) => (
+                  <button
+                    key={g.value}
+                    onClick={() =>
+                      setDraft(item.pathname, { genre: currentGenre === g.value ? "" : g.value })
+                    }
+                    disabled={busy}
+                    className={`rounded-full border-[2px] border-black px-3 py-1 font-anton text-xs uppercase transition-colors disabled:opacity-50 ${
+                      currentGenre === g.value ? "bg-sun" : "bg-cream text-black/50"
+                    }`}
+                  >
+                    {g.label}
+                  </button>
+                ))}
+              </div>
 
               {(item.kind === "audio" || currentCategory === "music-video") && (
                 <textarea

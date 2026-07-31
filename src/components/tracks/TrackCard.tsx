@@ -7,7 +7,7 @@ import { Play, Clapperboard } from "lucide-react";
 import { PillBadge } from "@/components/ui/PillBadge";
 import { MusicIcon } from "@/components/doodles/MusicIcon";
 import { TrackModal } from "@/components/tracks/TrackModal";
-import { categoryColor, categoryLabel, formatDuration, onColorTextMap } from "@/lib/utils";
+import { categoryColor, categoryLabel, formatDuration, genreLabel, onColorTextMap } from "@/lib/utils";
 import type { Track } from "@/lib/types";
 
 export function TrackCard({ track }: { track: Track }) {
@@ -53,9 +53,16 @@ export function TrackCard({ track }: { track: Track }) {
         </div>
 
         <div className="p-6">
-          <PillBadge color={accent} size="sm">
-            {categoryLabel(track.category)}
-          </PillBadge>
+          <div className="flex flex-wrap gap-2">
+            <PillBadge color={accent} size="sm">
+              {categoryLabel(track.category)}
+            </PillBadge>
+            {track.genre && (
+              <PillBadge color="sun" size="sm">
+                {genreLabel(track.genre)}
+              </PillBadge>
+            )}
+          </div>
 
           <h3 className="mt-3 font-anton text-2xl uppercase leading-tight">{track.titleEn}</h3>
           <p className="mt-1 font-zen font-black text-lg">{track.titleJa}</p>

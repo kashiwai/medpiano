@@ -8,7 +8,7 @@ import { MetaChip } from "@/components/ui/MetaChip";
 import { Button } from "@/components/ui/Button";
 import { YouTubeEmbed } from "@/components/tracks/YouTubeEmbed";
 import { AudioPlayer } from "@/components/tracks/AudioPlayer";
-import { categoryColor, categoryLabel, formatDuration, r2Url } from "@/lib/utils";
+import { categoryColor, categoryLabel, formatDuration, genreLabel, r2Url } from "@/lib/utils";
 import type { Track } from "@/lib/types";
 
 export function TrackModal({ track, onClose }: { track: Track; onClose: () => void }) {
@@ -53,7 +53,10 @@ export function TrackModal({ track, onClose }: { track: Track; onClose: () => vo
           )}
 
           <div className="mt-8">
-            <PillBadge color={categoryColor(track.category)}>{categoryLabel(track.category)}</PillBadge>
+            <div className="flex flex-wrap gap-2">
+              <PillBadge color={categoryColor(track.category)}>{categoryLabel(track.category)}</PillBadge>
+              {track.genre && <PillBadge color="sun">{genreLabel(track.genre)}</PillBadge>}
+            </div>
             <h2 className="mt-4 font-anton text-4xl md:text-5xl uppercase leading-tight">{track.titleEn}</h2>
             <h3 className="mt-2 font-zen font-black text-2xl">{track.titleJa}</h3>
 

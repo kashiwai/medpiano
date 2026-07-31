@@ -6,7 +6,9 @@ import {
   setMediaOverride,
   removeMediaOverride,
   normalizePathname,
+  MEDIA_GENRES,
   type MediaCategory,
+  type MediaGenre,
 } from "@/lib/blobMetadata";
 
 async function listUploaded(prefix: "tracks/" | "videos/") {
@@ -37,6 +39,7 @@ export async function GET() {
       kind,
       displayName: override.displayName ?? null,
       category: override.category ?? (kind === "audio" ? "music" : "music-video"),
+      genre: override.genre ?? null,
       year: override.year ?? new Date(blob.uploadedAt).getFullYear(),
       lyrics: override.lyrics ?? null,
       description: override.description ?? null,
@@ -53,10 +56,11 @@ export async function GET() {
 
 export async function PATCH(request: Request) {
   const body = await request.json();
-  const { pathname, displayName, category, year, lyrics, description, password } = body as {
+  const { pathname, displayName, category, genre, year, lyrics, description, password } = body as {
     pathname?: string;
     displayName?: string;
     category?: MediaCategory;
+    genre?: MediaGenre | "";
     year?: number;
     lyrics?: string;
     description?: string;
@@ -76,6 +80,8 @@ export async function PATCH(request: Request) {
   const next = { ...current };
   if (typeof displayName === "string") next.displayName = displayName.trim() || undefined;
   if (category === "music" || category === "music-video" || category === "movie") next.category = category;
+  if (genre === "") next.genre = undefined;
+  else if (MEDIA_GENRES.some((g) => g.value === genre)) next.genre = genre as MediaGenre;
   if (typeof year === "number" && Number.isFinite(year)) next.year = year;
   if (typeof lyrics === "string") next.lyrics = lyrics.trim() || undefined;
   if (typeof description === "string") next.description = description.trim() || undefined;

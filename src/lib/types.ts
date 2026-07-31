@@ -26,6 +26,7 @@ export type Track = {
   descriptionEn?: string;
   descriptionJa?: string;
   lyrics?: string | null;
+  genre?: string | null;
 
   featured: boolean;
   isNew?: boolean;

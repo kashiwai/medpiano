@@ -94,6 +94,19 @@ export function categoryLabel(category: TrackCategory | string): string {
   return categoryLabelMap[category as TrackCategory] ?? category.toUpperCase();
 }
 
+const genreLabelMap: Record<string, string> = {
+  jpop: "J-POP",
+  rock: "ロック",
+  ballad: "バラード",
+  "anime-movie": "アニメ・映画主題歌",
+  "cm-tieup": "CM・タイアップ",
+  "edm-dance": "EDM・ダンス",
+};
+
+export function genreLabel(genre: string): string {
+  return genreLabelMap[genre] ?? genre;
+}
+
 export function r2Url(path: string): string {
   const base = process.env.NEXT_PUBLIC_R2_PUBLIC_URL ?? "";
   return `${base}/${path}`;

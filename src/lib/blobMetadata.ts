@@ -4,9 +4,21 @@ const METADATA_PREFIX = "metadata/overrides/";
 
 export type MediaCategory = "music" | "music-video" | "movie";
 
+export type MediaGenre = "jpop" | "rock" | "ballad" | "anime-movie" | "cm-tieup" | "edm-dance";
+
+export const MEDIA_GENRES: { value: MediaGenre; label: string }[] = [
+  { value: "jpop", label: "J-POP" },
+  { value: "rock", label: "ロック" },
+  { value: "ballad", label: "バラード" },
+  { value: "anime-movie", label: "アニメ・映画主題歌" },
+  { value: "cm-tieup", label: "CM・タイアップ" },
+  { value: "edm-dance", label: "EDM・ダンス" },
+];
+
 export type MediaOverride = {
   displayName?: string;
   category?: MediaCategory;
+  genre?: MediaGenre;
   year?: number;
   lyrics?: string;
   description?: string;
