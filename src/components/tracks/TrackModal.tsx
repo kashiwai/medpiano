@@ -69,7 +69,7 @@ export function TrackModal({ track, onClose }: { track: Track; onClose: () => vo
 
             {(track.descriptionEn || track.descriptionJa) && (
               <div className="mt-8">
-                {track.category === "movie" && (
+                {(track.category === "movie" || track.category === "drama" || track.category === "trailer") && (
                   <p className="font-anton text-xs uppercase text-black/50">STORY</p>
                 )}
                 {track.descriptionEn && <p className="font-dm text-lg leading-relaxed">{track.descriptionEn}</p>}

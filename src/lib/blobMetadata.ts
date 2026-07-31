@@ -2,7 +2,7 @@ import { list, put, del } from "@vercel/blob";
 
 const METADATA_PREFIX = "metadata/overrides/";
 
-export type MediaCategory = "music" | "music-video" | "movie";
+export type MediaCategory = "music" | "music-video" | "movie" | "drama" | "trailer";
 
 export type MediaGenre = "jpop" | "rock" | "ballad" | "anime-movie" | "cm-tieup" | "edm-dance";
 

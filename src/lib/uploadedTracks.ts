@@ -45,7 +45,7 @@ function toTrack(
     tags: [],
     lyrics: override.lyrics ?? null,
     genre: override.genre ?? null,
-    descriptionJa: category === "movie" ? override.description : undefined,
+    descriptionJa: kind === "video" && category !== "music-video" ? override.description : undefined,
   };
 }
 

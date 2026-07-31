@@ -69,6 +69,10 @@ export function categoryColor(category: TrackCategory | NewsCategory | string): 
       return "teal";
     case "music-video":
       return "magenta";
+    case "drama":
+      return "sun";
+    case "trailer":
+      return "cream";
     case "release":
       return "magenta";
     case "mv":

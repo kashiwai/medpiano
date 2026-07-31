@@ -3,11 +3,18 @@
 import { useCallback, useEffect, useState } from "react";
 import { inputStyles } from "@/components/ui/FormField";
 
-type MediaCategory = "music" | "music-video" | "movie";
+type MediaCategory = "music" | "music-video" | "movie" | "drama" | "trailer";
 type MediaGenre = "jpop" | "rock" | "ballad" | "anime-movie" | "cm-tieup" | "edm-dance";
 
 // blobMetadata.ts はサーバー専用の @vercel/blob に依存しているため、
 // クライアントコンポーネントからはこの型・定数をここでも複製しておく。
+const VIDEO_CATEGORY_OPTIONS: { value: Extract<MediaCategory, "music-video" | "movie" | "drama" | "trailer">; label: string }[] = [
+  { value: "music-video", label: "🎵 MV" },
+  { value: "movie", label: "🎥 映画" },
+  { value: "drama", label: "📺 ドラマ" },
+  { value: "trailer", label: "🎬 予告" },
+];
+
 const GENRE_OPTIONS: { value: MediaGenre; label: string }[] = [
   { value: "jpop", label: "J-POP" },
   { value: "rock", label: "ロック" },
@@ -214,17 +221,17 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
               </div>
 
               {item.kind === "video" ? (
-                <div className="flex gap-2">
-                  {(["music-video", "movie"] as const).map((c) => (
+                <div className="flex flex-wrap gap-2">
+                  {VIDEO_CATEGORY_OPTIONS.map((c) => (
                     <button
-                      key={c}
-                      onClick={() => setDraft(item.pathname, { category: c })}
+                      key={c.value}
+                      onClick={() => setDraft(item.pathname, { category: c.value })}
                       disabled={busy}
                       className={`rounded-full border-[2px] border-black px-3 py-1 font-anton text-xs uppercase transition-colors disabled:opacity-50 ${
-                        currentCategory === c ? "bg-magenta" : "bg-cream text-black/50"
+                        currentCategory === c.value ? "bg-magenta" : "bg-cream text-black/50"
                       }`}
                     >
-                      {c === "music-video" ? "🎵 Music Video" : "🎥 Movie"}
+                      {c.label}
                     </button>
                   ))}
                 </div>
@@ -261,7 +268,7 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
                 />
               )}
 
-              {item.kind === "video" && currentCategory === "movie" && (
+              {item.kind === "video" && currentCategory !== "music-video" && (
                 <textarea
                   value={currentDescription}
                   onChange={(e) => setDraft(item.pathname, { description: e.target.value })}

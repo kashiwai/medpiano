@@ -79,7 +79,14 @@ export async function PATCH(request: Request) {
   const current = await getMediaOverride(pathname);
   const next = { ...current };
   if (typeof displayName === "string") next.displayName = displayName.trim() || undefined;
-  if (category === "music" || category === "music-video" || category === "movie") next.category = category;
+  if (
+    category === "music" ||
+    category === "music-video" ||
+    category === "movie" ||
+    category === "drama" ||
+    category === "trailer"
+  )
+    next.category = category;
   if (genre === "") next.genre = undefined;
   else if (MEDIA_GENRES.some((g) => g.value === genre)) next.genre = genre as MediaGenre;
   if (typeof year === "number" && Number.isFinite(year)) next.year = year;
