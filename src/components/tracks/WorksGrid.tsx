@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { FilterPill } from "@/components/tracks/FilterPill";
 import { TrackCard } from "@/components/tracks/TrackCard";
 import { TrackModal } from "@/components/tracks/TrackModal";
+import { PlayAllButton } from "@/components/player/PlayAllButton";
 import { Squiggle } from "@/components/doodles/Squiggle";
 import tracksData from "@/data/tracks.json";
 import type { Track, TrackCategory } from "@/lib/types";
@@ -59,8 +60,11 @@ export function WorksGrid() {
             <FilterPill type="mp3">{t("filters.mp3")}</FilterPill>
           </div>
 
-          <div className="ml-auto font-anton text-2xl">
-            <span className="text-magenta">{filteredTracks.length}</span> / {tracks.length}
+          <div className="ml-auto flex items-center gap-4">
+            <PlayAllButton tracks={filteredTracks} />
+            <div className="font-anton text-2xl">
+              <span className="text-magenta">{filteredTracks.length}</span> / {tracks.length}
+            </div>
           </div>
         </div>
       </section>

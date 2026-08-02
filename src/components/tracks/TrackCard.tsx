@@ -7,12 +7,15 @@ import { Play, Clapperboard } from "lucide-react";
 import { PillBadge } from "@/components/ui/PillBadge";
 import { MusicIcon } from "@/components/doodles/MusicIcon";
 import { TrackModal } from "@/components/tracks/TrackModal";
-import { categoryColor, categoryLabel, formatDuration, genreLabel, onColorTextMap } from "@/lib/utils";
+import { usePlayer } from "@/lib/player-context";
+import { categoryColor, categoryLabel, formatDuration, genreLabel, getAudioUrl, onColorTextMap } from "@/lib/utils";
 import type { Track } from "@/lib/types";
 
 export function TrackCard({ track }: { track: Track }) {
   const [isModalOpen, setModalOpen] = useState(false);
+  const { playTrack } = usePlayer();
   const accent = categoryColor(track.category);
+  const audioUrl = getAudioUrl(track);
 
   return (
     <>
@@ -46,9 +49,22 @@ export function TrackCard({ track }: { track: Track }) {
             </div>
           )}
           <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-            <div className="w-16 h-16 bg-magenta border-[3px] border-black rounded-full flex items-center justify-center">
-              <Play className="w-8 h-8 text-black" fill="black" />
-            </div>
+            {audioUrl ? (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  playTrack(track);
+                }}
+                aria-label="Play"
+                className="w-16 h-16 bg-magenta border-[3px] border-black rounded-full flex items-center justify-center"
+              >
+                <Play className="w-8 h-8 text-black" fill="black" />
+              </button>
+            ) : (
+              <div className="w-16 h-16 bg-magenta border-[3px] border-black rounded-full flex items-center justify-center">
+                <Play className="w-8 h-8 text-black" fill="black" />
+              </div>
+            )}
           </div>
         </div>
 

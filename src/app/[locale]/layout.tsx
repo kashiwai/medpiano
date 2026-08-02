@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { PlayerProvider } from "@/lib/player-context";
+import { MiniPlayerBar } from "@/components/player/MiniPlayerBar";
 import { anton, archivoBlack, zenKaku, dmSans } from "@/fonts";
 import "../globals.css";
 
@@ -75,9 +77,12 @@ export default async function LocaleLayout({
     >
       <body className="bg-cream text-black font-zen antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          <PlayerProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <MiniPlayerBar />
+          </PlayerProvider>
         </NextIntlClientProvider>
       </body>
     </html>

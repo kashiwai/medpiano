@@ -1,4 +1,4 @@
-import type { TrackCategory, NewsCategory } from "@/lib/types";
+import type { Track, TrackCategory, NewsCategory } from "@/lib/types";
 
 // Tailwind は `bg-${color}` のような動的テンプレートリテラルを静的解析できないため、
 // カラー系のクラスは必ずこのマップ経由で解決する（ビルド後にスタイルが消える事故を防ぐ）。
@@ -114,4 +114,11 @@ export function genreLabel(genre: string): string {
 export function r2Url(path: string): string {
   const base = process.env.NEXT_PUBLIC_R2_PUBLIC_URL ?? "";
   return `${base}/${path}`;
+}
+
+// トラックの実際に再生可能な音声URLを解決する。動画トラックは対象外。
+export function getAudioUrl(track: Track): string | null {
+  if (track.mp3Path) return r2Url(track.mp3Path);
+  if (track.mediaUrl && track.mediaKind !== "video") return track.mediaUrl;
+  return null;
 }
