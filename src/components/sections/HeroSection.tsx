@@ -1,9 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
-import { PianoIcon } from "@/components/doodles/PianoIcon";
 import { Sparkle } from "@/components/doodles/Sparkle";
 import { CurlyArrow } from "@/components/doodles/CurlyArrow";
 import { Star } from "@/components/doodles/Star";
@@ -45,8 +45,15 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
           className="relative"
         >
-          <div className="bg-teal border-[4px] border-black rounded-3xl aspect-square p-12 shadow-sticker rotate-3">
-            <PianoIcon className="w-full h-full text-black" />
+          <div className="relative aspect-square rotate-3 overflow-hidden rounded-3xl border-[4px] border-black shadow-sticker">
+            <Image
+              src="/brand/icon.png"
+              alt="MedPiano"
+              fill
+              priority
+              sizes="(min-width: 768px) 40vw, 80vw"
+              className="object-cover"
+            />
           </div>
           <Star className="absolute -top-6 -right-4 w-12 h-12" />
         </motion.div>

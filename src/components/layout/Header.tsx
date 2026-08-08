@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
@@ -26,8 +27,18 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between gap-6">
-        <Link href="/" className="font-anton text-2xl md:text-3xl uppercase tracking-tight">
-          MEDPIANO
+        <Link href="/" className="flex items-center gap-2.5">
+          <Image
+            src="/brand/icon.png"
+            alt=""
+            aria-hidden
+            width={40}
+            height={40}
+            className="h-9 w-9 rounded-xl border-2 border-black object-cover md:h-10 md:w-10"
+          />
+          <span className="font-anton text-2xl uppercase tracking-tight md:text-3xl">
+            MEDPIANO
+          </span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-8">

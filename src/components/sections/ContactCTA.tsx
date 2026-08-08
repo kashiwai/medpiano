@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Sparkle } from "@/components/doodles/Sparkle";
 import { CurlyArrow } from "@/components/doodles/CurlyArrow";
@@ -13,6 +14,14 @@ export function ContactCTA() {
         <Sparkle className="absolute top-0 left-1/4 w-12 h-12 hidden md:block" />
         <Sparkle className="absolute bottom-0 right-1/4 w-8 h-8 hidden md:block" />
         <CurlyArrow className="absolute top-16 -right-8 w-20 h-20 hidden md:block" rotation={120} />
+
+        <Image
+          src="/brand/logo.png"
+          alt="MedPiano — AI Music Creator"
+          width={460}
+          height={378}
+          className="mx-auto mb-8 h-auto w-full max-w-[220px]"
+        />
 
         <h2 className="font-anton text-hero uppercase leading-[0.9]">
           {t("title1")}

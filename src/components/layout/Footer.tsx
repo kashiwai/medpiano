@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
@@ -11,7 +12,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
-            <p className="font-anton text-4xl uppercase">MEDPIANO</p>
+            <Image
+              src="/brand/logo-text.png"
+              alt="MEDPIANO"
+              width={653}
+              height={206}
+              className="h-auto w-full max-w-[200px]"
+            />
             <p className="mt-4 font-dm text-sm text-cream/70 max-w-sm">{t("tagline")}</p>
             <div className="mt-6 flex flex-wrap gap-2">
               <span className="bg-teal text-black text-xs font-anton uppercase px-3 py-1 rounded-full">
