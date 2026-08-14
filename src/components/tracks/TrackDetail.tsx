@@ -1,6 +1,11 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
+
+// Mux Player（HLS.js同梱で数百KB）は動画を実際に開いたときだけ読み込む。
+// 静的importにすると全ページの初期バンドルに乗ってしまうため動的importにする。
+const MuxPlayer = dynamic(() => import("@mux/mux-player-react"), { ssr: false });
 import { PillBadge } from "@/components/ui/PillBadge";
 import { MetaChip } from "@/components/ui/MetaChip";
 import { Button } from "@/components/ui/Button";
@@ -21,6 +26,16 @@ export function TrackDetail({ track }: { track: Track }) {
         <YouTubeEmbed videoId={track.youtubeId} />
       ) : track.mp3Path ? (
         <AudioPlayer src={r2Url(track.mp3Path)} track={track} />
+      ) : track.muxPlaybackId ? (
+        <div className="aspect-video overflow-hidden rounded-2xl border-[3px] border-black bg-black">
+          <MuxPlayer
+            playbackId={track.muxPlaybackId}
+            streamType="on-demand"
+            accentColor="#ff2d87"
+            metadata={{ video_title: track.titleEn }}
+            style={{ width: "100%", height: "100%" }}
+          />
+        </div>
       ) : track.mediaUrl && track.mediaKind === "video" ? (
         <video
           controls

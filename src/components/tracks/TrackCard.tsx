@@ -26,7 +26,19 @@ export function TrackCard({ track }: { track: Track }) {
         onClick={() => setModalOpen(true)}
       >
         <div className="aspect-video relative bg-black overflow-hidden">
-          {track.mediaKind === "video" ? (
+          {track.mediaKind === "video" && track.muxPlaybackId ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element -- Mux画像APIはリモート固定URLのため next/image 最適化不要 */}
+              <img
+                src={`https://image.mux.com/${track.muxPlaybackId}/thumbnail.jpg?width=640&fit_mode=smartcrop`}
+                alt={track.titleEn}
+                className="w-full h-full object-cover"
+              />
+              <span className="absolute bottom-2 right-2 rounded-full border-[2px] border-black bg-cream px-2 py-0.5 font-anton text-[10px] uppercase">
+                HLS
+              </span>
+            </>
+          ) : track.mediaKind === "video" ? (
             <div className="relative w-full h-full bg-black flex items-center justify-center border-y-[3px] border-magenta">
               {/* フィルムストリップ風の縁取り（動画専用デザイン） */}
               <div className="absolute inset-x-0 top-0 flex justify-between px-2 py-1.5">

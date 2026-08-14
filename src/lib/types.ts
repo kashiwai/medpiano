@@ -29,6 +29,8 @@ export type Track = {
   // mp3Path は R2 相対パス前提のため、絶対URLで再生する場合はこちらを使う。
   mediaUrl?: string | null;
   mediaKind?: "audio" | "video" | null;
+  // Mux での HLS配信用。設定されていれば動画再生はこちらを優先する（未設定時は mediaUrl の raw <video> にフォールバック）。
+  muxPlaybackId?: string | null;
 
   client?: string | null;
   artist?: string | null;

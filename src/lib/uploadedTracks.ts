@@ -74,6 +74,7 @@ function toTrack(
     lyrics: override.lyrics ?? null,
     genre: override.genre ?? null,
     descriptionJa: kind === "video" && category !== "music-video" ? override.description : undefined,
+    muxPlaybackId: kind === "video" && override.muxStatus === "ready" ? override.muxPlaybackId : null,
   };
 }
 

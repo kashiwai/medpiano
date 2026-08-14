@@ -15,6 +15,8 @@ export const MEDIA_GENRES: { value: MediaGenre; label: string }[] = [
   { value: "edm-dance", label: "EDM・ダンス" },
 ];
 
+export type MuxStatus = "preparing" | "ready" | "errored";
+
 export type MediaOverride = {
   displayName?: string;
   category?: MediaCategory;
@@ -22,6 +24,10 @@ export type MediaOverride = {
   year?: number;
   lyrics?: string;
   description?: string;
+  // 動画のHLS配信（Mux）用。muxPlaybackId が入るまではダウンロード配信のraw <video> にフォールバックする。
+  muxAssetId?: string;
+  muxPlaybackId?: string;
+  muxStatus?: MuxStatus;
 };
 
 export type MediaOverrides = Record<string, MediaOverride>;

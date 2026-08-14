@@ -43,6 +43,8 @@ export async function GET() {
       year: override.year ?? new Date(blob.uploadedAt).getFullYear(),
       lyrics: override.lyrics ?? null,
       description: override.description ?? null,
+      muxStatus: override.muxStatus ?? null,
+      muxPlaybackId: override.muxPlaybackId ?? null,
     };
   };
 

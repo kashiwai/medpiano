@@ -55,6 +55,15 @@ export default function UploadPage() {
           clientPayload: password,
         });
         newlyUploaded.push({ name: file.name, url: blob.url });
+
+        // 動画はアップロード直後にMuxへ送ってHLSトランスコードを自動開始する（進行状況は下のManage一覧で確認できる）
+        if (category === "videos") {
+          fetch("/api/mux", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ pathname: blob.pathname, url: blob.url, password }),
+          }).catch(() => {});
+        }
       } catch (error) {
         setStatus(`エラー: ${file.name} — ${(error as Error).message}`);
         setUploading(false);

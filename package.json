@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.5.7",
+    "@mux/mux-node": "^15.0.0",
+    "@mux/mux-player-react": "^3.13.2",
     "@neondatabase/serverless": "^1.1.0",
     "@vercel/blob": "^2.6.1",
     "drizzle-orm": "^0.45.2",

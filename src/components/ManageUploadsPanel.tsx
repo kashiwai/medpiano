@@ -24,6 +24,8 @@ const GENRE_OPTIONS: { value: MediaGenre; label: string }[] = [
   { value: "edm-dance", label: "EDM・ダンス" },
 ];
 
+type MuxStatus = "preparing" | "ready" | "errored";
+
 type MediaItem = {
   pathname: string;
   url: string;
@@ -35,6 +37,8 @@ type MediaItem = {
   year: number;
   lyrics: string | null;
   description: string | null;
+  muxStatus: MuxStatus | null;
+  muxPlaybackId: string | null;
 };
 
 type Draft = {
@@ -65,6 +69,11 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
     const data = (await res.json()) as { items: MediaItem[] };
     setItems(data.items);
     setLoaded(true);
+    // 前回のセッションで変換中のまま残っている項目も、画面を開き直したら自動で追跡を再開する
+    data.items
+      .filter((item) => item.kind === "video" && item.muxStatus === "preparing")
+      .forEach((item) => pollMuxStatus(item.pathname));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -76,6 +85,47 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
 
   function setDraft(pathname: string, patch: Draft) {
     setDrafts((prev) => ({ ...prev, [pathname]: { ...prev[pathname], ...patch } }));
+  }
+
+  function updateItemMux(pathname: string, patch: Partial<Pick<MediaItem, "muxStatus" | "muxPlaybackId">>) {
+    setItems((prev) => prev.map((i) => (i.pathname === pathname ? { ...i, ...patch } : i)));
+  }
+
+  async function pollMuxStatus(pathname: string) {
+    for (let attempt = 0; attempt < 40; attempt++) {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      try {
+        const res = await fetch(
+          `/api/mux?pathname=${encodeURIComponent(pathname)}&password=${encodeURIComponent(password)}`,
+        );
+        if (!res.ok) return;
+        const data = (await res.json()) as { status: MuxStatus | null; playbackId: string | null };
+        if (data.status === "ready" || data.status === "errored") {
+          updateItemMux(pathname, { muxStatus: data.status, muxPlaybackId: data.playbackId });
+          return;
+        }
+      } catch {
+        return;
+      }
+    }
+  }
+
+  async function convertToHls(item: MediaItem) {
+    updateItemMux(item.pathname, { muxStatus: "preparing" });
+    try {
+      const res = await fetch("/api/mux", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pathname: item.pathname, url: item.url, password }),
+      });
+      if (!res.ok) {
+        updateItemMux(item.pathname, { muxStatus: null });
+        return;
+      }
+      pollMuxStatus(item.pathname);
+    } catch {
+      updateItemMux(item.pathname, { muxStatus: null });
+    }
   }
 
   async function handleSave(item: MediaItem) {
@@ -158,8 +208,18 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
     return <p className="font-dm text-sm text-black/50">まだアップロードされたファイルがありません。</p>;
   }
 
+  const unconvertedVideos = items.filter((i) => i.kind === "video" && !i.muxStatus);
+
   return (
     <div className="flex flex-col gap-3">
+      {unconvertedVideos.length > 0 && (
+        <button
+          onClick={() => unconvertedVideos.forEach((item) => convertToHls(item))}
+          className="self-start rounded-full border-[3px] border-black bg-teal px-4 py-2 font-anton text-xs uppercase shadow-sticker-sm hover:rotate-[-2deg] transition-transform"
+        >
+          🎬 Convert all {unconvertedVideos.length} videos to HLS
+        </button>
+      )}
       {items.map((item) => {
         const draft = drafts[item.pathname] ?? {};
         const currentName = draft.displayName ?? item.displayName ?? fallbackName(item.pathname);
@@ -221,7 +281,7 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
               </div>
 
               {item.kind === "video" ? (
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   {VIDEO_CATEGORY_OPTIONS.map((c) => (
                     <button
                       key={c.value}
@@ -234,6 +294,37 @@ export function ManageUploadsPanel({ password, refreshKey }: { password: string;
                       {c.label}
                     </button>
                   ))}
+
+                  <span className="mx-1 h-5 w-px bg-black/20" />
+
+                  {item.muxStatus === "ready" ? (
+                    <span className="rounded-full border-[2px] border-black bg-teal px-3 py-1 font-anton text-xs uppercase">
+                      ✅ HLS Ready
+                    </span>
+                  ) : item.muxStatus === "preparing" ? (
+                    <span className="rounded-full border-[2px] border-black bg-sun px-3 py-1 font-anton text-xs uppercase">
+                      ⏳ Converting...
+                    </span>
+                  ) : item.muxStatus === "errored" ? (
+                    <>
+                      <span className="rounded-full border-[2px] border-black bg-magenta px-3 py-1 font-anton text-xs uppercase">
+                        ❌ HLS Failed
+                      </span>
+                      <button
+                        onClick={() => convertToHls(item)}
+                        className="rounded-full border-[2px] border-black bg-cream px-3 py-1 font-anton text-xs uppercase text-black/70 hover:bg-black hover:text-cream transition-colors"
+                      >
+                        Retry
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => convertToHls(item)}
+                      className="rounded-full border-[2px] border-black bg-cream px-3 py-1 font-anton text-xs uppercase text-black/50 hover:bg-black hover:text-cream transition-colors"
+                    >
+                      🎬 Convert to HLS
+                    </button>
+                  )}
                 </div>
               ) : (
                 <span className="w-fit rounded-full border-[2px] border-black bg-teal px-3 py-1 font-anton text-xs uppercase">
