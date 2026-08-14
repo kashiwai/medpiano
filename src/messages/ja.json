@@ -159,7 +159,9 @@
       "year": "YEAR",
       "duration": "DURATION",
       "client": "CLIENT",
-      "artist": "ARTIST"
+      "artist": "ARTIST",
+      "share": "リンクをシェア",
+      "linkCopied": "コピーしました！"
     },
     "cta": {
       "badge": "WANT MORE?",

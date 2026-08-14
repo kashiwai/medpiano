@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { contactSchema } from "@/lib/schemas/contact";
 import { env } from "@/env";
+import { getDb } from "@/db";
+import { inquiries } from "@/db/schema";
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,7 +15,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true });
     }
 
+    // メール送信が失敗しても問い合わせ内容を失わないよう、まずDBに保存する
+    const [saved] = await getDb()
+      .insert(inquiries)
+      .values({
+        name: data.name,
+        email: data.email,
+        company: data.company || null,
+        projectType: data.projectType,
+        budget: data.budget || null,
+        timeline: data.timeline || null,
+        message: data.message,
+        referencedTrack: data.referencedTrack || null,
+      })
+      .returning({ id: inquiries.id });
+
     const resend = new Resend(env.RESEND_API_KEY);
+    const adminLink = `${env.NEXT_PUBLIC_SITE_URL}/ja/inquiries?id=${saved.id}`;
 
     const html = `
       <h1>New MedPiano Contact</h1>
@@ -32,11 +50,12 @@ export async function POST(req: NextRequest) {
       </table>
       <h2>Message:</h2>
       <p style="white-space: pre-wrap;">${escapeHtml(data.message)}</p>
+      <p><a href="${adminLink}">管理画面でこの問い合わせを見る →</a></p>
     `;
 
     await resend.emails.send({
       from: "MedPiano Site <noreply@medpiano.com>",
-      to: env.CONTACT_TO_EMAIL,
+      to: env.INQUIRY_ADMIN_EMAIL,
       replyTo: data.email,
       subject: `[MedPiano] ${data.projectType.toUpperCase()} inquiry from ${data.name}`,
       html,

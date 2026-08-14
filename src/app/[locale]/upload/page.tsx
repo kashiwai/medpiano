@@ -168,12 +168,20 @@ export default function UploadPage() {
         <ManageUploadsPanel password={password} refreshKey={refreshKey} />
       </div>
 
-      <Link
-        href="/works"
-        className="self-start rounded-full border-[3px] border-black bg-teal px-4 py-1.5 font-anton text-xs uppercase shadow-sticker-sm"
-      >
-        ← Works
-      </Link>
+      <div className="flex gap-2">
+        <Link
+          href="/works"
+          className="self-start rounded-full border-[3px] border-black bg-teal px-4 py-1.5 font-anton text-xs uppercase shadow-sticker-sm"
+        >
+          ← Works
+        </Link>
+        <Link
+          href="/inquiries"
+          className="self-start rounded-full border-[3px] border-black bg-sun px-4 py-1.5 font-anton text-xs uppercase shadow-sticker-sm"
+        >
+          📬 Inquiries
+        </Link>
+      </div>
     </main>
   );
 }

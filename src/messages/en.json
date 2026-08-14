@@ -159,7 +159,9 @@
       "year": "YEAR",
       "duration": "DURATION",
       "client": "CLIENT",
-      "artist": "ARTIST"
+      "artist": "ARTIST",
+      "share": "Share",
+      "linkCopied": "Copied!"
     },
     "cta": {
       "badge": "WANT MORE?",

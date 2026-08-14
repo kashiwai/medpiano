@@ -57,9 +57,14 @@ export default function Footer() {
           </p>
           <p className="font-anton uppercase text-xs text-cream/50">{t("madeIn")}</p>
         </div>
-        <Link href="/upload" className="mt-2 block text-center text-[10px] text-cream/20 hover:text-cream/40">
-          admin upload
-        </Link>
+        <div className="mt-2 flex justify-center gap-3">
+          <Link href="/upload" className="text-[10px] text-cream/20 hover:text-cream/40">
+            admin upload
+          </Link>
+          <Link href="/inquiries" className="text-[10px] text-cream/20 hover:text-cream/40">
+            admin inquiries
+          </Link>
+        </div>
       </div>
     </footer>
   );

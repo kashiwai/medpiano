@@ -1,5 +1,6 @@
 import { list } from "@vercel/blob";
 import { getMediaOverrides, normalizePathname, type MediaOverride } from "@/lib/blobMetadata";
+import tracksData from "@/data/tracks.json";
 import type { Track } from "@/lib/types";
 
 function displayTitle(pathname: string): string {
@@ -7,6 +8,33 @@ function displayTitle(pathname: string): string {
   const withoutExt = filename.replace(/\.[^./]+$/, "");
   // Vercel Blob の addRandomSuffix で付与されるランダムID（長い英数字の末尾）を取り除く
   return withoutExt.replace(/-[a-zA-Z0-9]{16,}$/, "");
+}
+
+// pathname から安定した短いハッシュを作る（同じファイルなら常に同じ値になる）。
+// 日本語タイトルなど slugify で消えてしまう文字だけの場合でも一意なURLを保証する。
+function shortHash(input: string): string {
+  let hash = 0;
+  for (let i = 0; i < input.length; i++) {
+    hash = (hash * 31 + input.charCodeAt(i)) | 0;
+  }
+  return Math.abs(hash).toString(36).slice(0, 6);
+}
+
+function slugify(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+// アップロード楽曲・動画の共有可能なURL用スラッグ。表示名 + pathnameのハッシュで
+// 「読める・安定している・重複しない」を両立させる（表示名が日本語だけでも一意性は保たれる）。
+export function trackSlug(pathname: string, displayName: string): string {
+  const base = slugify(displayName);
+  const hash = shortHash(normalizePathname(pathname));
+  return base ? `${base}-${hash}` : hash;
 }
 
 async function safeList(prefix: string) {
@@ -32,7 +60,7 @@ function toTrack(
   const category = override.category ?? (kind === "audio" ? "music" : "music-video");
   return {
     id: blob.url,
-    slug: blob.url,
+    slug: trackSlug(blob.pathname, title),
     titleEn: title,
     titleJa: title,
     category,
@@ -65,4 +93,16 @@ export async function getUploadedTracks(): Promise<Track[]> {
   ];
 
   return all.sort((a, b) => b.year - a.year);
+}
+
+// 個別共有リンク（/works/[slug]）用に、キュレーション楽曲（tracks.json）と
+// アップロード楽曲（Vercel Blob）の両方からslugで検索する。
+export async function getTrackBySlug(slug: string): Promise<Track | null> {
+  const curated = (tracksData as Track[]).find(
+    (track) => track.slug === slug && (track.youtubeId || track.mp3Path),
+  );
+  if (curated) return curated;
+
+  const uploaded = await getUploadedTracks();
+  return uploaded.find((track) => track.slug === slug) ?? null;
 }
